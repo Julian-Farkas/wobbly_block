@@ -1,0 +1,7 @@
+#ingore everything:
+*
+
+#exceptions:
+!*.java
+
+!.gitignore
