@@ -9,7 +9,15 @@ public class Pipes {
         public Pipe (int height, int width) {
             this.height = height;
             this.width = width;
-        };
+        }
+
+        public int getW() {
+            return this.width;
+        }
+
+        public int getH() {
+            return this.height;
+        }
     }
 
     private int positionX = 0;
@@ -17,11 +25,31 @@ public class Pipes {
     private Pipe Top = null;
     private Pipe Bottom = null;
 
+    private int bottomY = 0;
+
     public Pipes (int height, int width, int positionX) {
 
         this.positionX = positionX;
 
-        this.Top = new Pipe ( (int)(Math.random() * height - 159), width);
+        this.Top = new Pipe ( (int) (Math.random() * (height - 159) ), width);
         this.Bottom = new Pipe (height - Top.height, width);
-    }    
+
+        this.bottomY = this.Top.getH() + 240;
+    }
+    
+    public Pipe getTop() {
+        return this.Top;
+    }
+
+    public Pipe getBottom() {
+        return this.Bottom;
+    }
+
+    public int getPositionX() {
+        return this.positionX;
+    }
+
+    public int getBottomY() {
+        return this.bottomY;
+    }
 }
