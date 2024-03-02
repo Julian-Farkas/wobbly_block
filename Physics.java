@@ -1,6 +1,8 @@
 public class Physics implements Runnable {
 
     private static Pipes[] Obstacles = App.getObstacles();
+    private static int current = 0;
+    private static int score = 0;
 
     private static int blockY = 360;
     private static boolean blockDirection = true; //up == true down == false
@@ -40,8 +42,36 @@ public class Physics implements Runnable {
         GUI.draw();
     }
     
-    public static void collisionCheck() {
+    public static void collisionCheck() { //blockXOffset = 160
+        //check whether block already passed or is still in collision range:
 
+        if ( 160 /*BlockXOffset+width*/ > Obstacles[current].getPositionX() + Obstacles[current].getTop().getW()) {
+            //go to next pipes:
+            ++current;
+            // loop back to 1st position in array:
+            if (current > 9) current = 0;
+            //increment score if passed:
+            ++score;
+        }
+
+        //check if block collides on x-axis:
+        if ( Obstacles[current].getPositionX() < 240 ) {
+
+            //check the y-axis of top pipe:
+            if (Obstacles[current].getTop().getH() > blockY) {
+                restart();
+            //check the y-axis of bottom pipe:
+            } else if ( Obstacles[current].getBottomY() < blockY + 80) {
+                restart();
+            }
+        } 
+    }
+
+    public static void restart() {
+        current = 0;
+        App.createObstacles();
+        GUI.removeObstacles();
+        GUI.draw();
     }
 
     public void run() {

@@ -21,6 +21,13 @@ public class App {
         Obstacles[index] = new Pipes(GUI.getScreenSize()[1], 80, posX + 400);
     }
 
+    public static void createObstacles() {
+        Obstacles[0] = new Pipes(720, 80, 400);
+        for (int i = 1; i < 10; ++i) {
+            Obstacles[i] = new Pipes(720, 80, Obstacles[i-1].getPositionX() + 400);
+        }
+    }
+
     public static void main(String[] args) {
         
         Thread Gui = new Thread( new GUI());
@@ -29,11 +36,10 @@ public class App {
         GUI.setScreenSize(1280, 720);
 
         //create initial obstacle pipes:
-        Obstacles[0] = new Pipes(720, 80, 400);
+        
 
-        for (int i = 1; i < 10; ++i) {
-            Obstacles[i] = new Pipes(720, 80, Obstacles[i-1].getPositionX() + 400);
-        }
+        createObstacles();
+
         Physics.start();
         Gui.start();
 

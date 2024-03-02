@@ -92,6 +92,7 @@ public class GUI implements Runnable, KeyListener{
                 try {
                     Thread.sleep(15);
                     Physics.updateObstacles();
+                    Physics.collisionCheck();
                     RootFrame.repaint();
 
                 } catch (InterruptedException e) {

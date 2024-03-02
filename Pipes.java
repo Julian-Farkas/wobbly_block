@@ -31,7 +31,7 @@ public class Pipes {
 
         this.positionX = positionX;
 
-        this.Top = new Pipe ( (int) (Math.random() * (height - 159) ), width);
+        this.Top = new Pipe ( (int) (Math.random() * (height - 239) ), width);
         this.Bottom = new Pipe (height - Top.height, width);
 
         this.bottomY = this.Top.getH() + 240;
