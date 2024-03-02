@@ -49,6 +49,11 @@ public class Pipes {
         return this.positionX;
     }
 
+    public void setPositionX(int newPositionX) {
+        this.positionX = newPositionX;
+    }
+
+
     public int getBottomY() {
         return this.bottomY;
     }

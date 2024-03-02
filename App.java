@@ -8,9 +8,14 @@ public class App {
         return Obstacles;
     }
 
+    public static void setNewPipes() {
+        
+    }
+
     public static void main(String[] args) {
         
         Thread Gui = new Thread( new GUI());
+        Thread Physics = new Thread( new Physics());
 
         GUI.setScreenSize(1280, 720);
 
@@ -20,14 +25,9 @@ public class App {
         for (int i = 1; i < 10; ++i) {
             Obstacles[i] = new Pipes(720, 80, Obstacles[i-1].getPositionX() + 400);
         }
-        
+        Physics.start();
         Gui.start();
-        
-        while (Gui.isAlive())
-        {
-            int i = 1 + 1;
-        }
 
-        return;
+        if (!Gui.isAlive()) return;
     }
 }
