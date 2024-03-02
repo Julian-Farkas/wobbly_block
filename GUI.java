@@ -14,7 +14,7 @@ public class GUI implements Runnable, KeyListener{
     private static JPanel Block = new JPanel();
 
     public void keyPressed(KeyEvent ev) {
-        
+
         if (ev.getKeyCode() == 83) { //A (down)
             Physics.setBlockDirection(false);
 
@@ -25,15 +25,10 @@ public class GUI implements Runnable, KeyListener{
     }
 
     public void keyReleased(KeyEvent ev) {}
-
     public void keyTyped(KeyEvent ev) {}
 
     public static void removeObstacles() {
-        for (int i = 0; i < 10; ++i) {
-            RootFrame.remove(ObsTop[i]);
-            RootFrame.remove(ObsBottom[i]);
-        }
-        RootFrame.remove(Block);
+        RootFrame.getContentPane().removeAll();
     }
 
     public static void draw() {
@@ -72,10 +67,17 @@ public class GUI implements Runnable, KeyListener{
         
         RootFrame.setLayout(null);
         RootFrame.setSize(screenSize[0], screenSize[1]);
-        RootFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); //later replace with window listener!
+        RootFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); //later replace with window listener!
 
         //add listener to move block:
         RootFrame.addKeyListener(this);
+        RootFrame.addWindowListener( new WindowAdapter () {
+            public void windowClosing( WindowEvent ev) {
+                Physics.terminate();
+                RootFrame.dispose();
+                System.exit(0); //should find better solution
+            }
+        });
 
         Block.setBackground(Color.RED);
         Block.setBounds(160, screenSize[1]/2 - 80, 80, 80);        
@@ -88,7 +90,7 @@ public class GUI implements Runnable, KeyListener{
 
             while(true) {
                 try {
-                    Thread.sleep(20);
+                    Thread.sleep(15);
                     Physics.updateObstacles();
                     RootFrame.repaint();
 

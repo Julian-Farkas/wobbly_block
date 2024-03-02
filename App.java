@@ -37,6 +37,6 @@ public class App {
         Physics.start();
         Gui.start();
 
-        if (!Gui.isAlive()) return;
+        return;
     }
 }

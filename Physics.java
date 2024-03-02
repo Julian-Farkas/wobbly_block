@@ -9,6 +9,10 @@ public class Physics implements Runnable {
         return blockY; 
     }
 
+    public static void terminate() {
+        return;
+    }
+
     public static void setBlockDirection (boolean direction) {
         blockDirection = direction;
     }
