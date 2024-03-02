@@ -8,8 +8,17 @@ public class App {
         return Obstacles;
     }
 
-    public static void setNewPipes() {
-        
+    public static void setNewPipes(int index) {
+
+        int posX = 0;
+        //if first element get positionX of last element in list:
+        if (index > 0) {
+            posX = Obstacles[index - 1].getPositionX();
+        } else {
+            posX = Obstacles[9].getPositionX();
+        }
+
+        Obstacles[index] = new Pipes(GUI.getScreenSize()[1], 80, posX + 400);
     }
 
     public static void main(String[] args) {

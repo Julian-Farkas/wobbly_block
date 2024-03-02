@@ -6,7 +6,7 @@ public class Physics implements Runnable {
         for (int i = 0; i < 10; ++i ) {
             Obstacles[i].setPositionX(Obstacles[i].getPositionX() - 8);
 
-            if (Obstacles[i].getPositionX() + 80 < 0) 
+            if (Obstacles[i].getPositionX() + 80 < 0) App.setNewPipes(i);
         }
 
         GUI.removeObstacles();
