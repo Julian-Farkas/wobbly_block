@@ -3,6 +3,7 @@ public class Physics implements Runnable {
     private static Pipes[] Obstacles = App.getObstacles();
     private static int current = 0;
     private static int score = 0;
+    private static int highscore = 0;
 
     private static int blockY = 360;
     private static boolean blockDirection = true; //up == true down == false
@@ -11,12 +12,24 @@ public class Physics implements Runnable {
         return blockY; 
     }
 
+    public static int getScore() {
+        return score;
+    }
+
+    public static int getHighscore() {
+        return highscore;
+    }
+
     public static void terminate() {
         return;
     }
 
     public static void setBlockDirection (boolean direction) {
         blockDirection = direction;
+    }
+
+    public static boolean getBlockDirection () {
+        return blockDirection;
     }
 
     public static void updateObstacles() {
@@ -69,6 +82,15 @@ public class Physics implements Runnable {
 
     public static void restart() {
         current = 0;
+
+        //set new highscore:
+        if (score > highscore) highscore = score;
+        score = 0;
+
+        //cleanup:
+
+        blockY = GUI.getScreenSize()[1] / 2 - 80;
+        blockDirection = true;
         App.createObstacles();
         GUI.removeObstacles();
         GUI.draw();

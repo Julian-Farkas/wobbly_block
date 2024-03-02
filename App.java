@@ -22,7 +22,7 @@ public class App {
     }
 
     public static void createObstacles() {
-        Obstacles[0] = new Pipes(720, 80, 400);
+        Obstacles[0] = new Pipes(720, 80, 600);
         for (int i = 1; i < 10; ++i) {
             Obstacles[i] = new Pipes(720, 80, Obstacles[i-1].getPositionX() + 400);
         }

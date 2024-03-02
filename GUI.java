@@ -1,5 +1,7 @@
 import javax.swing.*;
+import java.awt.Font.*;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.*;
 
 public class GUI implements Runnable, KeyListener{
@@ -13,14 +15,35 @@ public class GUI implements Runnable, KeyListener{
 
     private static JPanel Block = new JPanel();
 
+    private static JLabel Scoreboard = new JLabel();
+
     public void keyPressed(KeyEvent ev) {
 
-        if (ev.getKeyCode() == 83) { //A (down)
+        int keyCode = ev.getKeyCode();
+        
+        switch (keyCode) {
+            case 83: // A down
+                Physics.setBlockDirection(false);
+                break;
+            
+            case 87: // w up
+                Physics.setBlockDirection(true);
+                break;
+            
+            case 32: //space toggle
+                Physics.setBlockDirection( !Physics.getBlockDirection() );
+                break;
+        
+            default:
+                break;
+        } 
+
+        /*if (ev.getKeyCode() == 83) { //A (down)
             Physics.setBlockDirection(false);
 
         } else if (ev.getKeyCode() == 87) {
             Physics.setBlockDirection(true);
-        }
+        }*/
         
     }
 
@@ -35,8 +58,8 @@ public class GUI implements Runnable, KeyListener{
         for (int i = 0; i < 10; ++i) {
 
             //create pipes and set bounds based on mAtH:
-            ObsTop[i] = new JPanel();
-            ObsBottom[i] = new JPanel();
+            if (Obs[i].getPositionX() < screenSize[0]){
+            
             ObsTop[i].setBounds( Obs[i].getPositionX(), 0, Obs[i].getTop().getW(), Obs[i].getTop().getH() );
             ObsBottom[i].setBounds( Obs[i].getPositionX(), Obs[i].getBottomY(), Obs[i].getBottom().getW(), Obs[i].getBottom().getH() );
             
@@ -44,11 +67,17 @@ public class GUI implements Runnable, KeyListener{
             ObsBottom[i].setBackground(Color.LIGHT_GRAY);
             RootFrame.add(ObsTop[i]);
             RootFrame.add(ObsBottom[i]);
+            }
 
             //redraw block:
             Block.setBounds(160, Physics.getBlockY(), 80, 80);
             Block.setBackground(Color.RED);
             RootFrame.add(Block);
+
+            Scoreboard.setBounds( screenSize[0]/2 - 75, 10, 150, 30);
+            Scoreboard.setText( Integer.toString(Physics.getScore()) + " / " + Integer.toString(Physics.getHighscore()) );
+            Scoreboard.setFont(new Font("Consolas", Font.PLAIN, 20));
+            RootFrame.add(Scoreboard);
 
         }
     }
@@ -64,6 +93,10 @@ public class GUI implements Runnable, KeyListener{
     private static JFrame RootFrame = new JFrame("Wobbly Block");
     public void run() {
 
+        for (int i = 0; i < 10; ++i) {
+            ObsTop[i] = new JPanel();
+            ObsBottom[i] = new JPanel();
+        }
         
         RootFrame.setLayout(null);
         RootFrame.setSize(screenSize[0], screenSize[1]);
@@ -80,7 +113,7 @@ public class GUI implements Runnable, KeyListener{
         });
 
         Block.setBackground(Color.RED);
-        Block.setBounds(160, screenSize[1]/2 - 80, 80, 80);        
+        Block.setBounds(160, screenSize[1]/2 - 80, 80, 80);
 
         //draw initial obstacles:
             draw();
@@ -90,10 +123,11 @@ public class GUI implements Runnable, KeyListener{
 
             while(true) {
                 try {
-                    Thread.sleep(15);
+                    
                     Physics.updateObstacles();
-                    Physics.collisionCheck();
+                    //Physics.collisionCheck();
                     RootFrame.repaint();
+                    Thread.sleep(10);
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
