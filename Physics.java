@@ -9,6 +9,10 @@ public class Physics implements Runnable {
         return blockY; 
     }
 
+    public static void setBlockDirection (boolean direction) {
+        blockDirection = direction;
+    }
+
     public static void updateObstacles() {
         for (int i = 0; i < 10; ++i ) {
             Obstacles[i].setPositionX(Obstacles[i].getPositionX() - 8);

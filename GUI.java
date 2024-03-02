@@ -1,7 +1,8 @@
 import javax.swing.*;
 import java.awt.Color;
+import java.awt.event.*;
 
-public class GUI implements Runnable{
+public class GUI implements Runnable, KeyListener{
     
     private static int[] screenSize = {0, 0};
 
@@ -11,6 +12,21 @@ public class GUI implements Runnable{
     private static JPanel[] ObsBottom = new JPanel[10];
 
     private static JPanel Block = new JPanel();
+
+    public void keyPressed(KeyEvent ev) {
+        
+        if (ev.getKeyCode() == 83) { //A (down)
+            Physics.setBlockDirection(false);
+
+        } else if (ev.getKeyCode() == 87) {
+            Physics.setBlockDirection(true);
+        }
+        
+    }
+
+    public void keyReleased(KeyEvent ev) {}
+
+    public void keyTyped(KeyEvent ev) {}
 
     public static void removeObstacles() {
         for (int i = 0; i < 10; ++i) {
@@ -57,6 +73,9 @@ public class GUI implements Runnable{
         RootFrame.setLayout(null);
         RootFrame.setSize(screenSize[0], screenSize[1]);
         RootFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); //later replace with window listener!
+
+        //add listener to move block:
+        RootFrame.addKeyListener(this);
 
         Block.setBackground(Color.RED);
         Block.setBounds(160, screenSize[1]/2 - 80, 80, 80);        
