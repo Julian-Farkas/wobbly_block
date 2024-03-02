@@ -10,24 +10,35 @@ public class GUI implements Runnable{
     private static JPanel[] ObsTop = new JPanel[10];
     private static JPanel[] ObsBottom = new JPanel[10];
 
+    private static JPanel Block = new JPanel();
+
     public static void removeObstacles() {
         for (int i = 0; i < 10; ++i) {
             RootFrame.remove(ObsTop[i]);
             RootFrame.remove(ObsBottom[i]);
         }
+        RootFrame.remove(Block);
     }
 
     public static void draw() {
         for (int i = 0; i < 10; ++i) {
+
+            //create pipes and set bounds based on mAtH:
             ObsTop[i] = new JPanel();
             ObsBottom[i] = new JPanel();
             ObsTop[i].setBounds( Obs[i].getPositionX(), 0, Obs[i].getTop().getW(), Obs[i].getTop().getH() );
             ObsBottom[i].setBounds( Obs[i].getPositionX(), Obs[i].getBottomY(), Obs[i].getBottom().getW(), Obs[i].getBottom().getH() );
-            //System.out.println(i + " " + Obs[i].getPositionX());
+            
             ObsTop[i].setBackground(Color.LIGHT_GRAY);
             ObsBottom[i].setBackground(Color.LIGHT_GRAY);
             RootFrame.add(ObsTop[i]);
             RootFrame.add(ObsBottom[i]);
+
+            //redraw block:
+            Block.setBounds(160, Physics.getBlockY(), 80, 80);
+            Block.setBackground(Color.RED);
+            RootFrame.add(Block);
+
         }
     }
 
@@ -47,23 +58,11 @@ public class GUI implements Runnable{
         RootFrame.setSize(screenSize[0], screenSize[1]);
         RootFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); //later replace with window listener!
 
-        JPanel Block = new JPanel();
         Block.setBackground(Color.RED);
-        Block.setBounds(0, screenSize[1]/2 - 80, 80, 80);        
+        Block.setBounds(160, screenSize[1]/2 - 80, 80, 80);        
 
         //draw initial obstacles:
-        for (int i = 0; i < 10; ++i) {
-
-            ObsTop[i] = new JPanel();
-            ObsBottom[i] = new JPanel();
-
             draw();
-
-            ObsTop[i].setBackground(Color.LIGHT_GRAY);
-            ObsBottom[i].setBackground(Color.LIGHT_GRAY);
-
-            RootFrame.add(ObsTop[i]);
-            RootFrame.add(ObsBottom[i]);
 
             RootFrame.add(Block);
             RootFrame.setVisible(true);
@@ -82,4 +81,4 @@ public class GUI implements Runnable{
         }
         
     }
-}}
+}
