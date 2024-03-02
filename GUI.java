@@ -123,18 +123,14 @@ public class GUI implements Runnable, KeyListener{
 
             while(true) {
                 try {
-                    
-                    Physics.updateObstacles();
-                    //Physics.collisionCheck();
-                    RootFrame.repaint();
                     Thread.sleep(10);
+                    Physics.updateObstacles();
+                    Physics.collisionCheck();
+                    RootFrame.repaint();
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            //}
-
+            }
         }
-        
-    }
 }
